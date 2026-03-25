@@ -1,10 +1,7 @@
-import { Grid3X3, Heart } from "lucide-react";
+import { Grid3X3 } from "lucide-react";
 import { SiGithub, SiX } from "react-icons/si";
 
 export function Footer() {
-  const year = new Date().getFullYear();
-  const utm = encodeURIComponent(window.location.hostname);
-
   return (
     <footer className="border-t border-border bg-sidebar mt-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -45,21 +42,6 @@ export function Footer() {
               <SiX size={14} />
             </span>
           </div>
-        </div>
-
-        <div className="mt-6 pt-6 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-muted-foreground">
-          <span>© {year} Echo-Grid. All rights reserved.</span>
-          <span>
-            Built with <Heart className="w-3 h-3 inline text-eg-orange" /> using{" "}
-            <a
-              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${utm}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
-            >
-              caffeine.ai
-            </a>
-          </span>
         </div>
       </div>
     </footer>

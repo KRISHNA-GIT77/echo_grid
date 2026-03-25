@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#11161f"/>
+      <stop offset="1" stop-color="#0b0f18"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd34a"/>
+      <stop offset="1" stop-color="#ff8a2a"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bg)"/>
+
+  <g opacity="0.22">
+    <circle cx="260" cy="240" r="150" fill="#ffd34a"/>
+    <circle cx="980" cy="220" r="170" fill="#7a5cff"/>
+  </g>
+
+  <g transform="translate(160 170)">
+    <rect x="0" y="0" width="520" height="460" rx="28" fill="#161d28" stroke="#2a3342"/>
+    <text x="86" y="92" fill="#f2f5f8" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="36" font-weight="800">Lightning</text>
+    <text x="86" y="152" fill="#a3adb9" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="22">Seek shelter immediately</text>
+
+    <g filter="url(#glow)">
+      <path d="M320,180 L250,310 L330,310 L260,420 L400,270 L320,270 Z" fill="url(#bolt)"/>
+    </g>
+
+    <path d="M86,360 L420,360" stroke="#2a3342" stroke-width="8" stroke-linecap="round"/>
+    <path d="M86,410 L360,410" stroke="#2a3342" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(760 260)">
+    <rect x="0" y="0" width="360" height="280" rx="26" fill="#0f1623" stroke="#2a3342"/>
+    <text x="60" y="58" fill="#ffd34a" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="18" font-weight="800" letter-spacing="3">30/30 RULE</text>
+    <text x="60" y="110" fill="#a3adb9" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="18">Wait 30 min after</text>
+    <text x="60" y="142" fill="#a3adb9" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="18">last thunder.</text>
+  </g>
+</svg>
+

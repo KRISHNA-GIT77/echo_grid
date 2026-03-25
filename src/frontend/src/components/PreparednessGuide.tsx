@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 
+const ASSET_BASE = import.meta.env.BASE_URL || "/";
+
 const GUIDES = [
   {
     id: "earthquake",
@@ -18,7 +20,7 @@ const GUIDES = [
     color: "text-eg-red",
     border: "border-eg-red/40",
     bg: "bg-eg-red/10",
-    image: "/assets/generated/earthquake-safety.dim_600x400.jpg",
+    image: `${ASSET_BASE}assets/generated/earthquake-safety.svg`,
     dos: [
       "Drop, Cover, and Hold On immediately",
       "Stay away from windows and glass",
@@ -41,7 +43,7 @@ const GUIDES = [
     color: "text-eg-cyan",
     border: "border-eg-cyan/40",
     bg: "bg-eg-cyan/10",
-    image: "/assets/generated/flood-safety.dim_600x400.jpg",
+    image: `${ASSET_BASE}assets/generated/flood-safety.svg`,
     dos: [
       "Move to higher ground immediately",
       "Listen to emergency broadcast channels",
@@ -64,7 +66,7 @@ const GUIDES = [
     color: "text-eg-yellow",
     border: "border-eg-yellow/40",
     bg: "bg-eg-yellow/10",
-    image: "/assets/generated/lightning-safety.dim_600x400.jpg",
+    image: `${ASSET_BASE}assets/generated/lightning-safety.svg`,
     dos: [
       "Seek shelter in a building or hard-topped vehicle",
       "Stay away from tall isolated trees",
@@ -87,7 +89,7 @@ const GUIDES = [
     color: "text-eg-fire",
     border: "border-eg-fire/40",
     bg: "bg-eg-fire/10",
-    image: "/assets/generated/fire-safety.dim_600x400.jpg",
+    image: `${ASSET_BASE}assets/generated/fire-safety.svg`,
     dos: [
       "Get out immediately — don't collect belongings",
       "Crawl low under smoke to breathe cleaner air",

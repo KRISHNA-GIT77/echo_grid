@@ -14,6 +14,10 @@ process.env.STORAGE_GATEWAY_URL =
 
 export default defineConfig({
   logLevel: "error",
+  // GitHub Pages project URLs are typically hosted under a sub-path
+  // (e.g. `https://username.github.io/repo/`). Using a relative base keeps
+  // asset URLs and `env.json` requests working there.
+  base: "./",
   build: {
     emptyOutDir: true,
     sourcemap: false,

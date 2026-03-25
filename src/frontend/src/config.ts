@@ -33,8 +33,24 @@ export async function loadConfig(): Promise<Config> {
   if (configCache) {
     return configCache;
   }
+  // Allow a "static demo" mode (e.g. GitHub Pages) without a real backend canister.
+  // In this mode, the app uses a mock backend implementation.
+  if (import.meta.env.VITE_USE_MOCK === "true") {
+    const mockConfig = {
+      backend_host: undefined,
+      backend_canister_id: "mock",
+      storage_gateway_url: DEFAULT_STORAGE_GATEWAY_URL,
+      bucket_name: DEFAULT_BUCKET_NAME,
+      project_id: DEFAULT_PROJECT_ID,
+      ii_derivation_origin: undefined,
+    } satisfies Config;
+    configCache = mockConfig;
+    return mockConfig;
+  }
   const backendCanisterId = process.env.CANISTER_ID_BACKEND;
-  const envBaseUrl = process.env.BASE_URL || "/";
+  // When hosting under a sub-path (e.g. `https://user.github.io/repo/`),
+  // `process.env.BASE_URL` won't be set in the browser. Use Vite's base URL instead.
+  const envBaseUrl = import.meta.env.BASE_URL || "/";
   const baseUrl = envBaseUrl.endsWith("/") ? envBaseUrl : `${envBaseUrl}/`;
   try {
     const response = await fetch(`${baseUrl}env.json`);

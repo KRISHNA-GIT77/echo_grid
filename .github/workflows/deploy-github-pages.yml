@@ -39,7 +39,12 @@ jobs:
       - name: Build frontend
         env:
           VITE_USE_MOCK: "true"
-        run: pnpm --filter '@caffeine/template-frontend' build:skip-bindings
+        run: |
+          pnpm --filter '@caffeine/template-frontend' exec vite build --base=./
+          pnpm --filter '@caffeine/template-frontend' copy:env
+
+      - name: Disable Jekyll
+        run: touch src/frontend/dist/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

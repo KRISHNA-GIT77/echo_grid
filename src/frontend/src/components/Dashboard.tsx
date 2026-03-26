@@ -144,15 +144,6 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
           >
             <RefreshCw className="w-4 h-4" />
           </Button>
-          <Button
-            size="sm"
-            onClick={() => setSosOpen(true)}
-            data-ocid="dashboard.sos.button"
-            className="bg-eg-red hover:bg-eg-red/90 text-white font-semibold uppercase tracking-wider glow"
-          >
-            <AlertTriangle className="w-4 h-4 mr-2" />
-            SOS
-          </Button>
           {isLoggedIn ? (
             <Button
               size="sm"
@@ -290,6 +281,17 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
             onMarkerClick={setSelectedReport}
             sosRequests={sosRequests}
           />
+
+          <button
+            type="button"
+            onClick={() => setSosOpen(true)}
+            data-ocid="dashboard.sos.fab"
+            className="absolute bottom-6 right-6 z-[1100] w-14 h-14 rounded-full bg-eg-red hover:bg-eg-red/90 text-white shadow-lg shadow-eg-red/20 flex items-center justify-center glow transition-transform active:scale-[0.98]"
+            aria-label="SOS Emergency"
+            title="SOS Emergency"
+          >
+            <AlertTriangle className="w-6 h-6" />
+          </button>
         </div>
       </div>
 

@@ -163,7 +163,11 @@ export function SosModal({ open, onClose, onDispatch }: SosModalProps) {
                     <SelectTrigger className="bg-input border-border">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-popover border-border">
+                    <SelectContent
+                      className="bg-popover border-border z-[20000]"
+                      // Ensure the dropdown isn't blocked by overlays or the map.
+                      position="popper"
+                    >
                       <SelectItem value={Severity.low}>Low</SelectItem>
                       <SelectItem value={Severity.medium}>Medium</SelectItem>
                       <SelectItem value={Severity.high}>High</SelectItem>

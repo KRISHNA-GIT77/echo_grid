@@ -89,16 +89,18 @@ export function MapView({
           display:flex;align-items:center;justify-content:center;
           box-shadow:0 0 16px ${cfg.color}55;
         ">
-          <div style="
-            width:14px;height:14px;position:relative;
-          ">
+          <div style="width:16px;height:16px;position:relative;">
             <div style="
-              position:absolute;top:6px;left:0;right:0;height:2px;
+              position:absolute;left:50%;top:1px;
+              transform:translateX(-50%);
+              width:3px;height:11px;
               background:${cfg.color};border-radius:2px;
             "></div>
             <div style="
-              position:absolute;top:0;bottom:0;left:6px;width:2px;
-              background:${cfg.color};border-radius:2px;
+              position:absolute;left:50%;bottom:0;
+              transform:translateX(-50%);
+              width:6px;height:6px;
+              background:${cfg.color};border-radius:999px;
             "></div>
           </div>
         </div>

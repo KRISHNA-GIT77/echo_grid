@@ -286,11 +286,11 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
             type="button"
             onClick={() => setSosOpen(true)}
             data-ocid="dashboard.sos.fab"
-            className="absolute bottom-6 right-6 z-[1100] w-14 h-14 rounded-full bg-eg-red hover:bg-eg-red/90 text-white shadow-lg shadow-eg-red/20 flex items-center justify-center glow transition-transform active:scale-[0.98]"
+            className="absolute bottom-6 right-6 z-[1100] w-14 h-14 rounded-full bg-eg-red hover:bg-eg-red/90 text-white shadow-lg shadow-eg-red/20 glow transition-transform active:scale-[0.98] ring-2 ring-eg-red/60 animate-pulse"
             aria-label="SOS Emergency"
             title="SOS Emergency"
           >
-            <AlertTriangle className="w-6 h-6" />
+            <span className="text-[12px] font-extrabold tracking-wider">SOS</span>
           </button>
         </div>
       </div>

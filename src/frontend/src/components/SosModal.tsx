@@ -12,7 +12,6 @@ import {
   CheckCircle,
   Loader2,
   MapPin,
-  AlertTriangle,
   X,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -119,7 +118,7 @@ export function SosModal({ open, onClose, onDispatch }: SosModalProps) {
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+        <div className="fixed inset-0 z-[9999] flex items-end justify-end p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -129,19 +128,16 @@ export function SosModal({ open, onClose, onDispatch }: SosModalProps) {
           />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            initial={{ opacity: 0, scale: 0.98, y: 18 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            exit={{ opacity: 0, scale: 0.98, y: 18 }}
             transition={{ duration: 0.2 }}
-            className="relative z-[10000] w-full max-w-lg mx-4"
+            className="relative z-[10000] w-full max-w-lg"
             data-ocid="sos.modal"
           >
             <div className="card-surface rounded-2xl overflow-hidden">
               <div className="flex items-center justify-between p-5 border-b border-border">
-                <h2 className="font-display font-bold text-lg flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-eg-red" />
-                  SOS Emergency
-                </h2>
+                <h2 className="font-display font-bold text-lg">SOS Emergency</h2>
                 <button
                   type="button"
                   onClick={onClose}

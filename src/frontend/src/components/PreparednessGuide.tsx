@@ -13,6 +13,34 @@ import { useMemo } from "react";
 
 const ASSET_BASE = import.meta.env.BASE_URL || "/";
 
+const EARTHQUAKE_PHOTOS = [
+  "https://images.unsplash.com/photo-1635446090918-569f5a3f01f8?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1200&q=80",
+];
+
+const FLOOD_PHOTOS = [
+  "https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1475776408506-9a5371e7a068?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80",
+];
+
+const LIGHTNING_PHOTOS = [
+  "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80",
+];
+
+const FIRE_PHOTOS = [
+  "https://images.unsplash.com/photo-1478391679764-b2d8b3cd1e94?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1516670428256-8f7a6f9b7a8a?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1494319827402-c4b839aed26b?auto=format&fit=crop&w=1200&q=80",
+];
+
+function pickPhoto(seed: number, photos: string[]): string {
+  return photos[seed % photos.length];
+}
+
 function buildGuides(seed: number) {
   return [
     {
@@ -22,9 +50,7 @@ function buildGuides(seed: number) {
       color: "text-eg-red",
       border: "border-eg-red/40",
       bg: "bg-eg-red/10",
-      image: `https://source.unsplash.com/featured/1200x800/?earthquake,building,damage&sig=${
-        seed + 1
-      }`,
+      image: pickPhoto(seed + 1, EARTHQUAKE_PHOTOS),
       fallbackImage: `${ASSET_BASE}assets/generated/earthquake-safety.svg`,
       dos: [
         "Drop, Cover, and Hold On immediately",
@@ -48,9 +74,7 @@ function buildGuides(seed: number) {
       color: "text-eg-cyan",
       border: "border-eg-cyan/40",
       bg: "bg-eg-cyan/10",
-      image: `https://source.unsplash.com/featured/1200x800/?flood,storm,water,rescue&sig=${
-        seed + 2
-      }`,
+      image: pickPhoto(seed + 2, FLOOD_PHOTOS),
       fallbackImage: `${ASSET_BASE}assets/generated/flood-safety.svg`,
       dos: [
         "Move to higher ground immediately",
@@ -74,9 +98,7 @@ function buildGuides(seed: number) {
       color: "text-eg-yellow",
       border: "border-eg-yellow/40",
       bg: "bg-eg-yellow/10",
-      image: `https://source.unsplash.com/featured/1200x800/?lightning,storm,sky&sig=${
-        seed + 3
-      }`,
+      image: pickPhoto(seed + 3, LIGHTNING_PHOTOS),
       fallbackImage: `${ASSET_BASE}assets/generated/lightning-safety.svg`,
       dos: [
         "Seek shelter in a building or hard-topped vehicle",
@@ -100,9 +122,7 @@ function buildGuides(seed: number) {
       color: "text-eg-fire",
       border: "border-eg-fire/40",
       bg: "bg-eg-fire/10",
-      image: `https://source.unsplash.com/featured/1200x800/?fire,smoke,emergency&sig=${
-        seed + 4
-      }`,
+      image: pickPhoto(seed + 4, FIRE_PHOTOS),
       fallbackImage: `${ASSET_BASE}assets/generated/fire-safety.svg`,
       dos: [
         "Get out immediately — don't collect belongings",
@@ -187,7 +207,7 @@ export function PreparednessGuide() {
                   </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden mb-6 aspect-video relative">
+                <div className="rounded-xl overflow-hidden mb-6 h-44 sm:h-52 relative">
                   <img
                     src={image}
                     onError={(e) => {

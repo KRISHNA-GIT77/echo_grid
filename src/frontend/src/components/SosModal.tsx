@@ -119,7 +119,7 @@ export function SosModal({ open, onClose, onDispatch }: SosModalProps) {
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -133,7 +133,7 @@ export function SosModal({ open, onClose, onDispatch }: SosModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="relative z-10 w-full max-w-lg mx-4"
+            className="relative z-[10000] w-full max-w-lg mx-4"
             data-ocid="sos.modal"
           >
             <div className="card-surface rounded-2xl overflow-hidden">

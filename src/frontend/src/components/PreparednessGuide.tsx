@@ -9,109 +9,123 @@ import {
   Zap,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { useMemo } from "react";
 
 const ASSET_BASE = import.meta.env.BASE_URL || "/";
 
-const GUIDES = [
-  {
-    id: "earthquake",
-    label: "Earthquake",
-    Icon: AlertTriangle,
-    color: "text-eg-red",
-    border: "border-eg-red/40",
-    bg: "bg-eg-red/10",
-    image: `${ASSET_BASE}assets/generated/earthquake-safety.dim_600x400.jpg`,
-    fallbackImage: `${ASSET_BASE}assets/generated/earthquake-safety.svg`,
-    dos: [
-      "Drop, Cover, and Hold On immediately",
-      "Stay away from windows and glass",
-      "Move to open areas if you're outside",
-      "Turn off gas supply if it's safe to do so",
-      "Keep calm and assist others around you",
-    ],
-    donts: [
-      "Don't run outside during active shaking",
-      "Don't use elevators during or after quake",
-      "Don't stand under doorframes (outdated advice)",
-      "Don't light matches after tremors — gas leaks!",
-      "Don't use phone unless it's an emergency",
-    ],
-  },
-  {
-    id: "flood",
-    label: "Flood",
-    Icon: Waves,
-    color: "text-eg-cyan",
-    border: "border-eg-cyan/40",
-    bg: "bg-eg-cyan/10",
-    image: `${ASSET_BASE}assets/generated/flood-safety.dim_600x400.jpg`,
-    fallbackImage: `${ASSET_BASE}assets/generated/flood-safety.svg`,
-    dos: [
-      "Move to higher ground immediately",
-      "Listen to emergency broadcast channels",
-      "Turn off utilities at the main switch",
-      "Disconnect all electrical appliances",
-      "Follow designated evacuation routes",
-    ],
-    donts: [
-      "Don't walk through flowing water — even 6 inches can knock you down",
-      "Don't drive into flooded roads — turn around, don't drown",
-      "Don't touch electrical equipment in wet areas",
-      "Don't return home until authorities declare it safe",
-      "Don't use tap water — it may be contaminated",
-    ],
-  },
-  {
-    id: "lightning",
-    label: "Lightning",
-    Icon: Zap,
-    color: "text-eg-yellow",
-    border: "border-eg-yellow/40",
-    bg: "bg-eg-yellow/10",
-    image: `${ASSET_BASE}assets/generated/lightning-safety.dim_600x400.jpg`,
-    fallbackImage: `${ASSET_BASE}assets/generated/lightning-safety.svg`,
-    dos: [
-      "Seek shelter in a building or hard-topped vehicle",
-      "Stay away from tall isolated trees",
-      "Crouch low with feet together if caught outside",
-      "Count seconds between lightning and thunder",
-      "Wait 30 min after last thunder before going outside",
-    ],
-    donts: [
-      "Don't stand under isolated trees in open areas",
-      "Don't hold metal objects like umbrellas or golf clubs",
-      "Don't stand in open fields, hilltops, or near water",
-      "Don't use corded phones during a storm",
-      "Don't shower or bathe — plumbing conducts electricity",
-    ],
-  },
-  {
-    id: "fire",
-    label: "Fire",
-    Icon: Flame,
-    color: "text-eg-fire",
-    border: "border-eg-fire/40",
-    bg: "bg-eg-fire/10",
-    image: `${ASSET_BASE}assets/generated/fire-safety.dim_600x400.jpg`,
-    fallbackImage: `${ASSET_BASE}assets/generated/fire-safety.svg`,
-    dos: [
-      "Get out immediately — don't collect belongings",
-      "Crawl low under smoke to breathe cleaner air",
-      "Close doors behind you to slow fire spread",
-      "Call 101 (Fire) once you're safely outside",
-      "Meet at the designated assembly point",
-    ],
-    donts: [
-      "Don't use elevators — use stairs only",
-      "Don't open hot doors — fire may be on the other side",
-      "Don't go back inside for any reason",
-      "Don't hide in closets or under beds",
-      "Don't use water on electrical fires — use CO₂ extinguisher",
-    ],
-  },
-];
+function buildGuides(seed: number) {
+  return [
+    {
+      id: "earthquake",
+      label: "Earthquake",
+      Icon: AlertTriangle,
+      color: "text-eg-red",
+      border: "border-eg-red/40",
+      bg: "bg-eg-red/10",
+      image: `https://source.unsplash.com/featured/1200x800/?earthquake,building,damage&sig=${
+        seed + 1
+      }`,
+      fallbackImage: `${ASSET_BASE}assets/generated/earthquake-safety.svg`,
+      dos: [
+        "Drop, Cover, and Hold On immediately",
+        "Stay away from windows and glass",
+        "Move to open areas if you're outside",
+        "Turn off gas supply if it's safe to do so",
+        "Keep calm and assist others around you",
+      ],
+      donts: [
+        "Don't run outside during active shaking",
+        "Don't use elevators during or after quake",
+        "Don't stand under doorframes (outdated advice)",
+        "Don't light matches after tremors — gas leaks!",
+        "Don't use phone unless it's an emergency",
+      ],
+    },
+    {
+      id: "flood",
+      label: "Flood",
+      Icon: Waves,
+      color: "text-eg-cyan",
+      border: "border-eg-cyan/40",
+      bg: "bg-eg-cyan/10",
+      image: `https://source.unsplash.com/featured/1200x800/?flood,storm,water,rescue&sig=${
+        seed + 2
+      }`,
+      fallbackImage: `${ASSET_BASE}assets/generated/flood-safety.svg`,
+      dos: [
+        "Move to higher ground immediately",
+        "Listen to emergency broadcast channels",
+        "Turn off utilities at the main switch",
+        "Disconnect all electrical appliances",
+        "Follow designated evacuation routes",
+      ],
+      donts: [
+        "Don't walk through flowing water — even 6 inches can knock you down",
+        "Don't drive into flooded roads — turn around, don't drown",
+        "Don't touch electrical equipment in wet areas",
+        "Don't return home until authorities declare it safe",
+        "Don't use tap water — it may be contaminated",
+      ],
+    },
+    {
+      id: "lightning",
+      label: "Lightning",
+      Icon: Zap,
+      color: "text-eg-yellow",
+      border: "border-eg-yellow/40",
+      bg: "bg-eg-yellow/10",
+      image: `https://source.unsplash.com/featured/1200x800/?lightning,storm,sky&sig=${
+        seed + 3
+      }`,
+      fallbackImage: `${ASSET_BASE}assets/generated/lightning-safety.svg`,
+      dos: [
+        "Seek shelter in a building or hard-topped vehicle",
+        "Stay away from tall isolated trees",
+        "Crouch low with feet together if caught outside",
+        "Count seconds between lightning and thunder",
+        "Wait 30 min after last thunder before going outside",
+      ],
+      donts: [
+        "Don't stand under isolated trees in open areas",
+        "Don't hold metal objects like umbrellas or golf clubs",
+        "Don't stand in open fields, hilltops, or near water",
+        "Don't use corded phones during a storm",
+        "Don't shower or bathe — plumbing conducts electricity",
+      ],
+    },
+    {
+      id: "fire",
+      label: "Fire",
+      Icon: Flame,
+      color: "text-eg-fire",
+      border: "border-eg-fire/40",
+      bg: "bg-eg-fire/10",
+      image: `https://source.unsplash.com/featured/1200x800/?fire,smoke,emergency&sig=${
+        seed + 4
+      }`,
+      fallbackImage: `${ASSET_BASE}assets/generated/fire-safety.svg`,
+      dos: [
+        "Get out immediately — don't collect belongings",
+        "Crawl low under smoke to breathe cleaner air",
+        "Close doors behind you to slow fire spread",
+        "Call 101 (Fire) once you're safely outside",
+        "Meet at the designated assembly point",
+      ],
+      donts: [
+        "Don't use elevators — use stairs only",
+        "Don't open hot doors — fire may be on the other side",
+        "Don't go back inside for any reason",
+        "Don't hide in closets or under beds",
+        "Don't use water on electrical fires — use CO₂ extinguisher",
+      ],
+    },
+  ] as const;
+}
 
 export function PreparednessGuide() {
+  const seed = useMemo(() => Math.floor(Math.random() * 10_000_000), []);
+  const GUIDES = useMemo(() => buildGuides(seed), [seed]);
+
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <motion.div

@@ -178,7 +178,8 @@ export function PreparednessGuide() {
                     src={image}
                     onError={(e) => {
                       // If the "original" JPG isn't present, fall back to the SVG placeholder.
-                      (e.currentTarget as HTMLImageElement).src = fallbackImage;
+                      if (e.currentTarget.src.endsWith(fallbackImage)) return;
+                      e.currentTarget.src = fallbackImage;
                     }}
                     alt={`${label} safety guide`}
                     className="w-full h-full object-cover"
@@ -191,6 +192,30 @@ export function PreparednessGuide() {
                       <Icon className="w-3 h-3 mr-1" />
                       {label} Protocol
                     </Badge>
+                  </div>
+                </div>
+
+                <div className="card-surface rounded-xl p-4 mb-6">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                    Quick Info
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    These steps are for immediate safety in the first minutes of an event.
+                    Follow local authorities and official alerts whenever possible.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                    <span className="px-2 py-1 rounded-md border border-border bg-muted/30">
+                      Police: 100
+                    </span>
+                    <span className="px-2 py-1 rounded-md border border-border bg-muted/30">
+                      Fire: 101
+                    </span>
+                    <span className="px-2 py-1 rounded-md border border-border bg-muted/30">
+                      Ambulance: 102
+                    </span>
+                    <span className="px-2 py-1 rounded-md border border-border bg-muted/30">
+                      Emergency: 112
+                    </span>
                   </div>
                 </div>
 

@@ -90,6 +90,7 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
   );
   const [sosOpen, setSosOpen] = useState(false);
   const [sosRequests, setSosRequests] = useState<SosRequest[]>([]);
+  const [mapOpen, setMapOpen] = useState(false);
   const { data: backendReports, isLoading, refetch } = useGetAllReports();
 
   const allReports = useMemo(() => {
@@ -275,16 +276,38 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
           className="relative card-surface rounded-xl overflow-hidden"
           style={{ height: "620px" }}
         >
-          <MapView
-            reports={allReports}
-            activeFilters={activeFilters}
-            onMarkerClick={setSelectedReport}
-            sosRequests={sosRequests}
-          />
+          {mapOpen ? (
+            <MapView
+              reports={allReports}
+              activeFilters={activeFilters}
+              onMarkerClick={setSelectedReport}
+              sosRequests={sosRequests}
+            />
+          ) : (
+            <div className="h-full w-full flex items-center justify-center p-8">
+              <div className="text-center space-y-4">
+                <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                  Live Map
+                </div>
+                <div className="font-display font-bold text-2xl">
+                  Map is not loaded yet
+                </div>
+                <Button
+                  onClick={() => setMapOpen(true)}
+                  className="bg-eg-orange hover:bg-eg-orange/90 text-white font-semibold glow"
+                >
+                  Open Live Map
+                </Button>
+              </div>
+            </div>
+          )}
 
           <button
             type="button"
-            onClick={() => setSosOpen(true)}
+            onClick={() => {
+              setMapOpen(true);
+              setSosOpen(true);
+            }}
             data-ocid="dashboard.sos.fab"
             className="absolute bottom-6 right-6 z-[1100] w-14 h-14 rounded-full bg-eg-red hover:bg-eg-red/90 text-white shadow-lg shadow-eg-red/20 glow transition-transform active:scale-[0.98] ring-2 ring-eg-red/60 animate-pulse"
             aria-label="SOS Emergency"

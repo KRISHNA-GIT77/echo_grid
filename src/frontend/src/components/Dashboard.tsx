@@ -17,6 +17,8 @@ import { SAMPLE_REPORTS } from "../data/sampleReports";
 import { useGetAllReports } from "../hooks/useQueries";
 import { MapView } from "./MapView";
 import { ReportModal } from "./ReportModal";
+import { SosModal } from "./SosModal";
+import type { SosRequest } from "../sos";
 
 const FILTERS = [
   {
@@ -86,6 +88,8 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
   const [selectedReport, setSelectedReport] = useState<IncidentReport | null>(
     null,
   );
+  const [sosOpen, setSosOpen] = useState(false);
+  const [sosRequests, setSosRequests] = useState<SosRequest[]>([]);
   const { data: backendReports, isLoading, refetch } = useGetAllReports();
 
   const allReports = useMemo(() => {
@@ -139,6 +143,15 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
             data-ocid="dashboard.refresh.button"
           >
             <RefreshCw className="w-4 h-4" />
+          </Button>
+          <Button
+            size="sm"
+            onClick={() => setSosOpen(true)}
+            data-ocid="dashboard.sos.button"
+            className="bg-eg-red hover:bg-eg-red/90 text-white font-semibold uppercase tracking-wider glow"
+          >
+            <AlertTriangle className="w-4 h-4 mr-2" />
+            SOS
           </Button>
           {isLoggedIn ? (
             <Button
@@ -275,6 +288,7 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
             reports={allReports}
             activeFilters={activeFilters}
             onMarkerClick={setSelectedReport}
+            sosRequests={sosRequests}
           />
         </div>
       </div>
@@ -314,6 +328,13 @@ export function Dashboard({ isLoggedIn, onLoginClick }: DashboardProps) {
       )}
 
       <ReportModal open={reportOpen} onClose={() => setReportOpen(false)} />
+      <SosModal
+        open={sosOpen}
+        onClose={() => setSosOpen(false)}
+        onDispatch={(req) => {
+          setSosRequests((prev) => [req, ...prev].slice(0, 50));
+        }}
+      />
     </main>
   );
 }

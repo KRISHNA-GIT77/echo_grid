@@ -2,6 +2,7 @@ import L from "leaflet";
 import { useEffect, useRef } from "react";
 import type { IncidentReport } from "../backend";
 import { IncidentType, Severity } from "../backend";
+import type { SosRequest } from "../sos";
 
 // Fix default marker icons without delete operator
 (L.Icon.Default.prototype as any)._getIconUrl = undefined;
@@ -26,6 +27,15 @@ const SEVERITY_INTENSITY: Record<Severity, number> = {
   [Severity.critical]: 1.0,
 };
 
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function createCustomIcon(type: IncidentType): L.DivIcon {
   const cfg = TYPE_CONFIG[type];
   return L.divIcon({
@@ -40,12 +50,14 @@ interface MapViewProps {
   reports: IncidentReport[];
   activeFilters: Set<IncidentType>;
   onMarkerClick?: (report: IncidentReport) => void;
+  sosRequests?: SosRequest[];
 }
 
 export function MapView({
   reports,
   activeFilters,
   onMarkerClick,
+  sosRequests = [],
 }: MapViewProps) {
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -53,6 +65,46 @@ export function MapView({
   const heatLayerRef = useRef<any>(null);
   const heatmapLoadedRef = useRef(false);
   const heatmapLoadingRef = useRef(false);
+
+  const SOS_SEVERITY_CONFIG: Record<
+    Severity,
+    { color: string; label: string }
+  > = {
+    [Severity.low]: { color: "#7aa2ff", label: "Low" },
+    [Severity.medium]: { color: "#ffd34a", label: "Medium" },
+    [Severity.high]: { color: "#ff8a2a", label: "High" },
+    [Severity.critical]: { color: "#ff4b3a", label: "Critical" },
+  };
+
+  function createSosIcon(severity: Severity): L.DivIcon {
+    const cfg = SOS_SEVERITY_CONFIG[severity];
+    return L.divIcon({
+      className: "",
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      html: `
+        <div style="
+          width:30px;height:30px;border-radius:999px;
+          background:${cfg.color}22;border:2px solid ${cfg.color};
+          display:flex;align-items:center;justify-content:center;
+          box-shadow:0 0 16px ${cfg.color}55;
+        ">
+          <div style="
+            width:14px;height:14px;position:relative;
+          ">
+            <div style="
+              position:absolute;top:6px;left:0;right:0;height:2px;
+              background:${cfg.color};border-radius:2px;
+            "></div>
+            <div style="
+              position:absolute;top:0;bottom:0;left:6px;width:2px;
+              background:${cfg.color};border-radius:2px;
+            "></div>
+          </div>
+        </div>
+      `,
+    });
+  }
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -126,6 +178,27 @@ export function MapView({
       markersRef.current.push(marker);
     }
 
+    for (const sos of sosRequests) {
+      const sosCfg = SOS_SEVERITY_CONFIG[sos.severity];
+      const marker = L.marker([sos.latitude, sos.longitude], {
+        icon: createSosIcon(sos.severity),
+      })
+        .addTo(map)
+        .bindPopup(
+          `<div style="background:#161D28;border:1px solid #242C38;border-radius:8px;padding:12px;min-width:200px;color:#F2F5F8;font-family:sans-serif">
+            <div style="font-weight:800;color:${sosCfg.color};text-transform:uppercase;font-size:11px;letter-spacing:0.1em;margin-bottom:6px">SOS Emergency</div>
+            <div style="font-size:12px;color:#A3ADB9;line-height:1.5;margin-bottom:8px">${escapeHtml(
+              sos.description,
+            )}</div>
+            <div style="font-size:11px;color:#7F8A97">
+              Severity: <span style="color:${sosCfg.color};font-weight:700;text-transform:capitalize">${sosCfg.label}</span>
+            </div>
+          </div>`,
+          { className: "custom-popup" },
+        );
+      markersRef.current.push(marker);
+    }
+
     if (
       heatmapLoadedRef.current &&
       (L as any).heatLayer &&
@@ -150,7 +223,7 @@ export function MapView({
         })
         .addTo(map);
     }
-  }, [reports, activeFilters, onMarkerClick]);
+  }, [reports, activeFilters, onMarkerClick, sosRequests]);
 
   return (
     <div className="relative w-full h-full">

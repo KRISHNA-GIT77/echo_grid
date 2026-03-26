@@ -20,7 +20,8 @@ const GUIDES = [
     color: "text-eg-red",
     border: "border-eg-red/40",
     bg: "bg-eg-red/10",
-    image: `${ASSET_BASE}assets/generated/earthquake-safety.svg`,
+    image: `${ASSET_BASE}assets/generated/earthquake-safety.dim_600x400.jpg`,
+    fallbackImage: `${ASSET_BASE}assets/generated/earthquake-safety.svg`,
     dos: [
       "Drop, Cover, and Hold On immediately",
       "Stay away from windows and glass",
@@ -43,7 +44,8 @@ const GUIDES = [
     color: "text-eg-cyan",
     border: "border-eg-cyan/40",
     bg: "bg-eg-cyan/10",
-    image: `${ASSET_BASE}assets/generated/flood-safety.svg`,
+    image: `${ASSET_BASE}assets/generated/flood-safety.dim_600x400.jpg`,
+    fallbackImage: `${ASSET_BASE}assets/generated/flood-safety.svg`,
     dos: [
       "Move to higher ground immediately",
       "Listen to emergency broadcast channels",
@@ -66,7 +68,8 @@ const GUIDES = [
     color: "text-eg-yellow",
     border: "border-eg-yellow/40",
     bg: "bg-eg-yellow/10",
-    image: `${ASSET_BASE}assets/generated/lightning-safety.svg`,
+    image: `${ASSET_BASE}assets/generated/lightning-safety.dim_600x400.jpg`,
+    fallbackImage: `${ASSET_BASE}assets/generated/lightning-safety.svg`,
     dos: [
       "Seek shelter in a building or hard-topped vehicle",
       "Stay away from tall isolated trees",
@@ -89,7 +92,8 @@ const GUIDES = [
     color: "text-eg-fire",
     border: "border-eg-fire/40",
     bg: "bg-eg-fire/10",
-    image: `${ASSET_BASE}assets/generated/fire-safety.svg`,
+    image: `${ASSET_BASE}assets/generated/fire-safety.dim_600x400.jpg`,
+    fallbackImage: `${ASSET_BASE}assets/generated/fire-safety.svg`,
     dos: [
       "Get out immediately — don't collect belongings",
       "Crawl low under smoke to breathe cleaner air",
@@ -144,7 +148,7 @@ export function PreparednessGuide() {
         </TabsList>
 
         {GUIDES.map(
-          ({ id, label, Icon, color, border, bg, image, dos, donts }) => (
+          ({ id, label, Icon, color, border, bg, image, fallbackImage, dos, donts }) => (
             <TabsContent key={id} value={id}>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -172,6 +176,10 @@ export function PreparednessGuide() {
                 <div className="rounded-xl overflow-hidden mb-6 aspect-video relative">
                   <img
                     src={image}
+                    onError={(e) => {
+                      // If the "original" JPG isn't present, fall back to the SVG placeholder.
+                      (e.currentTarget as HTMLImageElement).src = fallbackImage;
+                    }}
                     alt={`${label} safety guide`}
                     className="w-full h-full object-cover"
                   />

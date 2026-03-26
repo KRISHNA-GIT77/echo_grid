@@ -83,26 +83,18 @@ export function MapView({
       iconSize: [30, 30],
       iconAnchor: [15, 15],
       html: `
-        <div style="
-          width:30px;height:30px;border-radius:999px;
-          background:${cfg.color}22;border:2px solid ${cfg.color};
-          display:flex;align-items:center;justify-content:center;
-          box-shadow:0 0 16px ${cfg.color}55;
-        ">
-          <div style="width:16px;height:16px;position:relative;">
-            <div style="
-              position:absolute;left:50%;top:1px;
-              transform:translateX(-50%);
-              width:3px;height:11px;
-              background:${cfg.color};border-radius:2px;
-            "></div>
-            <div style="
-              position:absolute;left:50%;bottom:0;
-              transform:translateX(-50%);
-              width:6px;height:6px;
-              background:${cfg.color};border-radius:999px;
-            "></div>
-          </div>
+        <div style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px ${cfg.color}55;">
+          <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SOS">
+            <polygon
+              points="15,3 27,26 3,26"
+              fill="${cfg.color}22"
+              stroke="${cfg.color}"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+            <rect x="13" y="10" width="4" height="11" rx="2" fill="${cfg.color}" />
+            <circle cx="15" cy="23" r="2" fill="${cfg.color}" />
+          </svg>
         </div>
       `,
     });
